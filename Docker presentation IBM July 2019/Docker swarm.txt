@@ -1,0 +1,175 @@
+1) Start 5 nodes on Labs 
+
+https://labs.play-with-docker.com
+
+enter docker swarm command
+
+docker swarm
+
+docker swarm init 
+
+need to know ip address 
+ip a
+
+docker swarm init --advertise-addr (HOST-IP) 
+docker swarm init --advertise-addr 192.168.0.39
+
+Docker Swarm has been set up for you
+we will take 3 managers and 2 worker nodes
+
+Copy that command in 4th and 5th instance for worker nodes
+
+docker swarm join \
+token cmd
+
+Check command in 1st manager: 
+docker node ls (run on only manager nodes)
+
+Make 2nd 3rd as managers
+docker swarm join-token manager
+to make others as manager
+
+3 blues are managers and 2 are worker nodes
+docker node ls
+ We have swarm up and running
+
+ 
+ docker service create --name redis --replicas=8 redis
+ 
+ docker node ls
+  
+ docker service ps redis
+ 
+ 
+8 containers spun up with 1 command
+
+
+Goto 3th  instance manager : docker ps
+Run docker ps on all instance and check
+
+
+===========
+Update now:
+docker service update --replicas=16 redis
+
+docker service ls
+docker service ls  ( this will run in mgr only)
+docker service ps redis ( this will run in mgr only)
+
+
+=========
+
+Now will see falut tolerant of orchestration 
+In worker node: 5th instance:
+Delete some containers
+
+Docker kill $( docker ps -aq)
+
+Docker ps (all the containers have been killed)
+
+docker ps ( all are up and running now)
+
+Docker ps
+This is the beauty of orchestration
+
+Go to: mgr 1: 
+docker node ls
+docker service ls
+=====================
+
+What is one of the node goes down
+docker ps
+delete node by clicking del button
+Think one of your severs gone or out of network
+All of a sudden.
+Now go to mgr and check 
+Docker service ls : 13/16
+
+Now 16/16
+Docker service ps redis
+It brought up on diff node
+It spun up new containers on other nodes
+
+Docker ps on all 
+This Is robust and fault tolerance system
+
+=======================
+
+03:
+docker service create --name redis --replicas=11 redis
+
+docker run -it -d -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock manomarks/visualizer
+
+
+Docker node ls
+docker service create --name redis --replicas=11 redis
+docker service ls
+docker service ps redis  (which container is running where)
+we are facing difficulty to find out which container is running where
+https://github.com/dockersamples/docker-swarm-visualizer
+docker run -it -d -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock manomarks/visualizer
+
+to run visualizer in swarm:
+==========================
+docker service create \
+  --name=viz \
+  --publish=8080:8080/tcp \
+  --constraint=node.role==manager \
+  --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+  dockersamples/visualizer
+  
+  
+
+publish its port on 8080 port
+downloads the visualizer on port 8080
+docker service ps redis ( mgr1)
+click on port 8080
+
+
+Now check orchestration
+docker ps on all
+docker kill $(docker ps -aq)
+go to visualizer and check
+
+No we will bring down node itself
+Delete
+Worker node 4
+
+=========================
+
+We will work now with portainer site
+Portainer.io
+https://www.portainer.io/
+docker run -d -p 9000:9000 portainer/portainer -H tcp:// 192.168.0.39:2375
+click on 9000 port
+create a pwd: 
+
+https://www.portainer.io/installation/
+
+
+curl -L https://downloads.portainer.io/portainer-agent-stack.yml -o portainer-agent-stack.yml
+docker stack deploy --compose-file=portainer-agent-stack.yml portainer
+docker service create --name portainer_agent --network portainer_agent_network --publish mode=host,target=9001,published=9001 -e AGENT_CLUSTER_ADDR=tasks.portainer_agent --mode global --mount type=bind,src=//var/run/docker.sock,dst=/var/run/docker.sock --mount type=bind,src=//var/lib/docker/volumes,dst=/var/lib/docker/volumes –-mount type=bind,src=/,dst=/host portainer/agent
+
+
+
+
+
+docker links:
+============
+https://www.youtube.com/user/intellipaaat/search?query=docker
+https://www.youtube.com/watch?v=RppfZGuLsmA
+https://www.youtube.com/watch?v=sg9wNcdMhbU&list=PLkA60AVN3hh8lmRdhPKzsNJvZxJ8dpj4t
+https://www.youtube.com/watch?v=pp0utvGy0tU
+
+
+
+
+
+
+
+
+
+
+
+

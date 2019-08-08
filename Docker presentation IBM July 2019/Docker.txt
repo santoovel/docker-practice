@@ -1,0 +1,136 @@
+docker version
+docker -v
+docker --version
+docker info
+docker images --help
+docker -version
+docker pull ubuntu / docker pull ubuntu:18.04
+
+docker images
+
+Images: are template to create containers
+Containers is a running instance of Images
+Images stores in Docker hub
+
+docker images --help
+docker images -q ( gives image id)
+docker images -f "dangling=false" 
+docker images -f "dangling=false" -q
+
+docker images -a
+
+docker run ubuntu ( container created not running)
+docker ps 
+docker ps -a 
+
+to run container:
+docker run --name MyUbuntu1 -it ubuntu bash
+
+ls
+
+Open new terminal:
+docker ps
+
+docker inspect ubuntu
+
+docker rmi ubuntu or image id
+
+docker rmi ubuntu:18.04
+
+docker stop MyUbuntu1
+docker rmi -f ubuntu:18.04 
+
+docker images
+=========================================
+
+How to run Jenkins on Docker container | How to create Jenkins Volumes on Docker
+
+
+docker pull jenkins 
+docker images -q
+docker ps 
+docker ps -a ( no conatiners running)
+
+to run and start jenkins docker container:
+==========================================
+docker run -p 8080:8080 -p 50000:50000 jenkins 
+
+to store persistent storage:
+
+docker run --name MyJenkins1 -p 8080:8080 -p 50000:50000 -v C:/2019 Learnings/Docker presentation IBM July 2019/Jenkins_Home:/var/jenkins_home jenkins 
+
+localhost:8080 
+give admin pwd: 
+create test job
+
+new cmd prompt
+docker ps
+docker stop container id
+docker rm container id / name
+docker ps -a
+
+
+
+docker run --name MyJenkins2 -p 9090:8080 -p 50000:50000 -v C:/2019 Learnings/Docker presentation IBM July 2019/Jenkins_Home:/var/jenkins_home jenkins 
+
+docker volume create myjenkins 
+docker volume ls 
+docker volume inspect myjenkins 
+docker run --name MyJenkins3 -p 9090:8080 -p 50000:50000 -v myjenkins:/var/jenkins_home jenkins 
+docker inspect MyJenkins3 
+
+========
+
+Nginx is open source webserver
+docker container run --publish 90:80 nginx
+
+to run in background
+docker container run --publish 90:80 --detach nginx
+
+docker container ls
+docker container stop container id
+
+docker container ls
+docker container ls -a
+
+docker container run --publish 90:80 --detach --name webhost nginx
+
+docker container ls -a
+
+docker container logs webhost
+
+docker container rm conid
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
