@@ -1,11 +1,14 @@
-wordpress:
-  image: wordpress
-  links:
-    - mysql:mysql
-  ports:
-    - 8080:80
+version: '3'
+services:
 
-mysql:
-  image: mysql
-  environment:
+  wordpress:
+    image: wordpress
+    links:
+      - mysql:mysql
+    ports:
+    - 7070:80
+
+  mysql:
+    image: mysql
+    environment:
     - MYSQL_ROOT_PASSWORD=password
